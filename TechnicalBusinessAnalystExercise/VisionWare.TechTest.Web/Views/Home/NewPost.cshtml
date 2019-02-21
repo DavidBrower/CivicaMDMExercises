@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Create a Post";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.ValidationSummary(true)
+
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+    
+    <p>
+        <button type="submit" class="btn btn-primary">Submit &raquo;</button>
+    </p>
+}

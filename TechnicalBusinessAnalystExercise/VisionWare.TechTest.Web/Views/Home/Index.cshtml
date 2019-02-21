@@ -1,0 +1,27 @@
+﻿@using System.Collections.Generic
+@model VisionWare.TechTest.Web.Models.Home.IndexModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>VisionWare Blog</h1>
+    <p class="lead">A company wide blog to provide visibility on all the awesome happenings of VW.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Recent Posts</h2>
+        @if(!Model.RecentPosts.Any())
+        {
+            <h4>Create a post to see it here!</h4>
+        }
+
+        @foreach(var post in Model.RecentPosts)
+        {
+            <h4>@post.Title by @post.Author on @post.CreatedAtUtc</h4>
+            <p>@post.Content.Substring(0, Math.Min(post.Content.Length - 1, 100))</p>
+            <p><a class="btn btn-default btn-sm" href="@Url.Action("Post", "Home", new { id = post.Id })">View &raquo;</a></p>
+        }
+    </div>
+</div>

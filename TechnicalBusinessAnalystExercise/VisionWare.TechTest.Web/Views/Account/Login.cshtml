@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@Html.ValidationSummary(true)
+
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+    
+    <p>
+        <button type="submit" class="btn btn-primary">Login &raquo;</button>
+    </p>
+
+    <p>
+        Not registered? @Html.ActionLink("Register Here", "Register")
+    </p>
+}
+

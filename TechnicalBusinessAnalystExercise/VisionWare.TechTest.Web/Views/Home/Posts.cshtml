@@ -1,0 +1,20 @@
+﻿@using System.Collections.Generic
+@model List<VisionWare.TechTest.Common.Models.Post>
+@{
+    ViewBag.Title = "All Posts";
+}
+<div class="jumbotron">
+    <h1>Posts</h1>
+</div>
+@if (!Model.Any())
+{
+    <h2>There are currently no posts to show!</h2>
+}
+@foreach (var post in Model)
+{
+    <h2>@post.Title by @post.Author on @post.CreatedAtUtc</h2>
+    <p>@post.Content.Substring(0, Math.Min(post.Content.Length - 1, 200))</p>
+    <p><a class="btn btn-default btn-sm" href="@Url.Action("Post", "Home", new { id = post.Id })">View &raquo;</a></p>
+}
+
+@Html.ActionLink("Create Post", "NewPost", null, new Dictionary<string, object> { { "class", "btn btn-primary" } })

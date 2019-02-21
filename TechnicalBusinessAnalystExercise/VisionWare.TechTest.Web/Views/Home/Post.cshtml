@@ -1,0 +1,82 @@
+﻿@using System.Collections.Generic
+@model VisionWare.TechTest.Web.Models.Home.PostModel
+@{
+    ViewBag.Title = Model.Post.Title;
+}
+
+<h1>@ViewBag.Title</h1>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @if (string.IsNullOrWhiteSpace(Model.Post.Author))
+        {
+            <span class="h4">Author Unknown</span>
+        }
+        else
+        {
+            <span class="h4">@Model.Post.Author</span>
+        }
+    </div>
+    <div class="panel-body">
+        @Model.Post.Content
+    </div>
+    <div class="panel-footer">
+        <span class="h6 pull-right">@Model.Post.CreatedAtUtc</span>
+        <div>
+            @foreach (var tag in Model.Post.Tags)
+            {
+                <a href="@Url.Action("Posts", "Home", new {tag = tag})">@tag</a>
+            }
+        </div>
+    </div>
+
+</div>
+
+<div class="jumbotron">
+    <span class="h3">Comments</span>
+    @if (!Model.Post.Comments.Any())
+    {
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-sm-12 h5">
+                    <b>Currently, there are no comments for this post.</b>
+                </div>
+            </div>
+        </div>
+    }
+    @foreach (var comment in Model.Post.Comments)
+    {
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-sm-12 h5">
+                    <b>@comment.Author</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div>@comment.Content</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <span class="h6">@comment.CreatedAtUtc</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@if (Request.IsAuthenticated)
+{
+    <div class="well">
+        <h3>Add Comment</h3>
+        @using (Html.BeginForm("NewComment", "Home"))
+        {
+            <input type="hidden" name="PostId" value="@Model.Post.Id" />
+            <textarea name="Content"></textarea>
+            <p>
+                <button type="submit" class="btn btn-primary">Add &raquo;</button>
+            </p>
+        }
+    </div>
+}
